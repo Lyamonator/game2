@@ -12,8 +12,8 @@ namespace Game2
         private Texture2D _texture;
         private Vector2 _position;
 
-        private Texture2D _texture2;
-        private Vector2 _position2;
+        private Texture2D [] _texture2 = new Texture2D [5];
+        private Vector2 [] _position2 = new Vector2 [5];
 
         public Game1()
         {
@@ -21,9 +21,7 @@ namespace Game2
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
-
-        public Rectangle BoundingBox => new Rectangle((int)_position.X, (int)_position.Y + 55, _texture.Width, _texture.Height - 110);
-        public Rectangle BoundingBox2 => new Rectangle((int)_position2.X, (int)_position2.Y, _texture2.Width, _texture2.Height);
+        
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -39,10 +37,13 @@ namespace Game2
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             _texture = Content.Load<Texture2D>("car");
-            _position = new Vector2(0, 0);
+            _position = new Vector2(900, 750);
 
-            _texture2 = Content.Load<Texture2D>("car2");
-            _position2 = new Vector2(800, 400);
+            for (int i = 0; i < 5; i++)
+            {
+                _texture2[i] = Content.Load<Texture2D>("car2");
+                _position2[i] = new Vector2(i*200, i*50);
+            }
 
             // TODO: use this.Content to load your game content here
         }
@@ -69,10 +70,14 @@ namespace Game2
             {
                 _position.X += 5;
             }
-            if (BoundingBox.Intersects(BoundingBox2))
+
+            for (int i = 0; i < 5; i++)
             {
-                _position.X = 0;
-                _position.Y = 0;
+                if (new Rectangle((int)_position2[i].X, (int)_position2[i].Y, _texture2[i].Width, _texture2[i].Height).Intersects(new Rectangle((int)_position.X, (int)_position.Y + 55, _texture.Width, _texture.Height - 110)))
+                {
+                    _position.X = 900;
+                    _position.Y = 750;
+                }
             }
             base.Update(gameTime);
         }
@@ -86,7 +91,8 @@ namespace Game2
             _spriteBatch.End();
 
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_texture2, _position2, Color.White);
+            for (int i = 0; i < 5; i++)
+                _spriteBatch.Draw(_texture2[i], _position2[i], Color.White);
             _spriteBatch.End();
 
 
