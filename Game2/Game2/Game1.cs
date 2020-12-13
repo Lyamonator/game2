@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -22,7 +22,7 @@ namespace Game2
             IsMouseVisible = true;
         }
 
-        public Rectangle BoundingBox => new Rectangle((int)_position.X, (int)_position.Y, _texture.Width, _texture.Height);
+        public Rectangle BoundingBox => new Rectangle((int)_position.X, (int)_position.Y + 55, _texture.Width, _texture.Height - 110);
         public Rectangle BoundingBox2 => new Rectangle((int)_position2.X, (int)_position2.Y, _texture2.Width, _texture2.Height);
         protected override void Initialize()
         {
